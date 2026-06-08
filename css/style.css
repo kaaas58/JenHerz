@@ -890,11 +890,68 @@ p { max-width: 62ch; }
 }
 
 @media (max-width: 700px) {
+
+  /* ---- Scroll-Stopp-Position pro Section ---- */
+  /* Globales scroll-padding an die kleinere Mobile-Kopfleiste anpassen */
+  html { scroll-padding-top: 68px; }
+
+  /* Angebot & Über mich: etwas früher – Herzsymbol darüber bleibt sichtbar */
+  #angebot     { scroll-margin-top: 54px; }
+  #ueber-mich  { scroll-margin-top: 54px; }
+
+  /* Arbeitsweise: früher, aber etwas weniger als oben */
+  #arbeitsweise { scroll-margin-top: 32px; }
+
+  /* Stimmen: später – dunklere Section-Fläche beginnt bündig unter der Kopfleiste */
+  #stimmen  { scroll-margin-top: -18px; }
+
+  /* Kontakt: einen Tick später */
+  #kontakt  { scroll-margin-top: -10px; }
+
+  /* ---- Karussell ---- */
+  /* Buttons ausblenden – auf Mobile wird gewischt */
+  .carousel__btn { display: none; }
+
+  /* Track füllt den vollen Container */
+  .carousel__track {
+    flex: 1 1 auto;
+    padding: 10px 0 24px;
+    gap: 16px;
+  }
+
+  /* Eine Kachel nimmt exakt 100 % der sichtbaren Track-Breite ein */
   .testimonial-card,
   .testimonial-card--feature {
-    flex: 0 0 min(84vw, 340px);
-    flex-basis: min(84vw, 340px);
+    flex: 0 0 100%;
+    flex-basis: 100%;
+    min-height: 260px;
   }
+  .testimonial-card__inner { min-height: 260px; }
+
+  /* Flip-Kachel dehnt sich beim Umdrehen auf ~180 % aus */
+  .testimonial-card--feature {
+    transition: min-height 0.9s var(--ease-soft);
+  }
+  .testimonial-card--feature.is-flipped,
+  .testimonial-card--feature.is-flipped .testimonial-card__inner {
+    min-height: 468px; /* 180 % von 260 px */
+  }
+
+  /* Etwas kleinere Schrift */
+  .testimonial-card__mark       { font-size: 2rem; }
+  .testimonial-card__excerpt,
+  .testimonial-card__full       { font-size: 0.9rem; }
+  .testimonial-card__author     { font-size: 0.95rem; margin-top: 12px; }
+  .testimonial-card__hint       { font-size: 0.74rem; }
+  .testimonial-card__placeholder-text { font-size: 0.9rem; }
+
+  /* Section-Heading im Stimmen-Bereich kleiner */
+  #stimmen h2 { font-size: 1.75rem; }
+  #stimmen .section__intro { font-size: 0.95rem; }
+
+  /* Kachel-Innenabstand auf Mobile */
+  .testimonial-card { padding: 26px 24px; }
+  .testimonial-card__face { padding: 26px 24px; }
 }
 
 @media (max-width: 620px) {
