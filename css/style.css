@@ -338,6 +338,18 @@ p { max-width: 62ch; }
   color: var(--color-gold-deep);
   margin-top: 1.4em;
 }
+.hero__journey {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.18rem;
+  color: var(--color-text);
+  margin-top: 1.4em;
+  line-height: 1.9;
+}
+.hero__journey span {
+  color: var(--color-gold-deep);
+  letter-spacing: 0.02em;
+}
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -595,6 +607,15 @@ p { max-width: 62ch; }
 .approach-list p {
   color: var(--color-text-soft);
   font-size: 0.99rem;
+}
+.approach-closing {
+  text-align: center;
+  margin-top: 48px;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.45rem;
+  color: var(--color-gold-deep);
+  line-height: 1.6;
 }
 
 /* ---------- Testimonial Carousel ---------- */
