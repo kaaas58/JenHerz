@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"c:\\\\Users\\\\lutr5\\\\58_Structure\\\\DEV\\\\DEV_websides\\\\JennHerzraum\\\\css\" \"c:\\\\Users\\\\lutr5\\\\58_Structure\\\\DEV\\\\DEV_websides\\\\JennHerzraum\\\\js\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\lutr5\\58_Structure\\DEV\\DEV_websides\\JennHerzraum"
+    ]
+  }
+}
