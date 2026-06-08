@@ -5,9 +5,9 @@
 
 :root {
   /* Farbwelt – warme, natürliche Töne (an das Logo angelehnt) */
-  --color-bg: #fbf4ea;
-  --color-bg-alt: #f3e7d6;
-  --color-sand-line: #e6d3ba;
+  --color-bg: #f5e3be;
+  --color-bg-alt: #edd8aa;
+  --color-sand-line: #d8b87c;
 
   --color-text: #372b1f;
   --color-text-soft: #5a4232;
@@ -607,6 +607,14 @@ p { max-width: 62ch; }
 .approach-list p {
   color: var(--color-text-soft);
   font-size: 0.99rem;
+}
+.approach-item__closing {
+  margin-top: 18px;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-gold-deep);
+  line-height: 1.7;
 }
 .approach-closing {
   text-align: center;
