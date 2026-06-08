@@ -17,12 +17,12 @@
   --color-gold-deep: #ad7f37;
   --color-gold-light: #e9d2a8;
 
-  --color-tile-brown: #5a4736;
-  --color-tile-brown-deep: #4a392b;
-  --color-tile-gold: #8a6a43;
-  --color-tile-gold-deep: #745634;
-  --color-tile-text: #f3e4c8;
-  --color-tile-text-soft: #d9c2a0;
+  --color-tile-brown: #7a6050;
+  --color-tile-brown-deep: #66503e;
+  --color-tile-gold: #a88050;
+  --color-tile-gold-deep: #8e6a3a;
+  --color-tile-text: #f8eeda;
+  --color-tile-text-soft: #e2ceae;
 
   --font-heading: "Cormorant Garamond", Georgia, serif;
   --font-body: "Jost", "Segoe UI", sans-serif;
@@ -416,14 +416,13 @@ p { max-width: 62ch; }
   position: relative;
   padding: 38px 34px 40px;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-tile);
-  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  box-shadow:
+    0 5px 4px rgba(50, 34, 18, 0.16),
+    0 22px 60px -8px rgba(74, 59, 46, 0.20);
   display: flex;
   flex-direction: column;
-}
-.tile:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 26px 54px -20px rgba(74, 59, 46, 0.55);
+  transform: translateY(0);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .tile--brown {
@@ -581,13 +580,12 @@ p { max-width: 62ch; }
   padding: 26px 30px;
   border-radius: var(--radius-md);
   background: var(--color-bg-alt);
-  border: 1px solid var(--color-sand-line);
-  transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
-}
-.approach-list li:hover {
-  transform: translateX(6px);
-  box-shadow: var(--shadow-tile);
-  border-color: var(--color-gold);
+  border: 1.5px solid var(--color-gold-deep);
+  box-shadow:
+    0 4px 4px rgba(150, 110, 55, 0.12),
+    0 14px 44px -4px rgba(74, 59, 46, 0.12);
+  transform: translateY(0);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .approach-list__num {
   display: inline-flex;
@@ -673,7 +671,7 @@ p { max-width: 62ch; }
   display: flex;
   flex-direction: column;
   background: var(--color-bg);
-  border: 1px solid var(--color-sand-line);
+  border: 1.5px solid var(--color-gold-deep);
   box-shadow: var(--shadow-tile);
   min-height: 300px;
 }
