@@ -879,7 +879,7 @@ p { max-width: 62ch; }
   .about__media { max-width: 420px; margin: 0 auto; }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 910px) {
   .main-nav {
     position: fixed;
     inset: 76px 16px auto 16px;
