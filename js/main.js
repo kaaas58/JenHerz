@@ -66,6 +66,41 @@
   if (prevBtn) prevBtn.addEventListener("click", function () { scrollByCard(-1); });
   if (nextBtn) nextBtn.addEventListener("click", function () { scrollByCard(1); });
 
+  /* ---------- Angebot-Kacheln: auf-/zuklappen ---------- */
+  var offerTiles = document.querySelectorAll(".offer-grid .tile");
+
+  function setTileExpanded(tile, expanded) {
+    var body = tile.querySelector(".tile__body");
+    if (!body) return;
+    if (expanded) {
+      body.style.maxHeight = body.scrollHeight + "px";
+    } else {
+      body.style.maxHeight = "";
+    }
+    tile.classList.toggle("is-expanded", expanded);
+    tile.setAttribute("aria-expanded", String(expanded));
+  }
+
+  offerTiles.forEach(function (tile) {
+    tile.addEventListener("click", function () {
+      setTileExpanded(tile, !tile.classList.contains("is-expanded"));
+    });
+    tile.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+        event.preventDefault();
+        setTileExpanded(tile, !tile.classList.contains("is-expanded"));
+      }
+    });
+  });
+
+  document.addEventListener("click", function (event) {
+    offerTiles.forEach(function (tile) {
+      if (tile.classList.contains("is-expanded") && !tile.contains(event.target)) {
+        setTileExpanded(tile, false);
+      }
+    });
+  });
+
   /* ---------- Feature testimonial: flip / expand on click ---------- */
   var featureCard = document.getElementById("featureTestimonial");
 

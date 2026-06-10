@@ -423,13 +423,26 @@ p { max-width: 62ch; }
 
 /* ---------- Angebot: Tiles ---------- */
 .offer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  position: relative;
+  display: flex;
+  flex-direction: column;
   gap: 26px;
+}
+.offer-grid::before {
+  content: "";
+  position: absolute;
+  left: 35px;
+  top: 50px;
+  bottom: 50px;
+  width: 3px;
+  background: var(--color-gold-deep);
+  opacity: 0.35;
+  z-index: 0;
 }
 
 .tile {
   position: relative;
+  z-index: 1;
   padding: 38px 34px 40px;
   border-radius: var(--radius-lg);
   box-shadow:
@@ -449,11 +462,42 @@ p { max-width: 62ch; }
   background: linear-gradient(155deg, var(--color-tile-gold) 0%, var(--color-tile-gold-deep) 100%);
   color: var(--color-tile-text);
 }
-.tile--feature {
-  grid-column: span 2;
+
+.tile__body {
+  position: relative;
 }
-@media (max-width: 760px) {
-  .tile--feature { grid-column: span 1; }
+.tile__body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-tile-brown-deep));
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+.tile--gold .tile__body::after {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-tile-gold-deep));
+}
+
+@media (max-width: 700px) {
+  .tile {
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .tile__body {
+    max-height: 92px;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+  .tile__body::after {
+    opacity: 1;
+  }
+  .tile.is-expanded .tile__body::after {
+    opacity: 0;
+  }
 }
 
 .tile__index {
@@ -596,12 +640,26 @@ p { max-width: 62ch; }
 
 /* ---------- Arbeitsweise ---------- */
 .approach-list {
+  position: relative;
   display: grid;
   gap: 30px;
   max-width: 820px;
   margin: 0 auto;
 }
+.approach-list::before {
+  content: "";
+  position: absolute;
+  left: 35px;
+  top: 50px;
+  bottom: 50px;
+  width: 3px;
+  background: var(--color-gold-deep);
+  opacity: 0.35;
+  z-index: 0;
+}
 .approach-list li {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 56px 1fr;
   gap: 22px;
