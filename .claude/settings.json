@@ -11,7 +11,8 @@
       "Bash(python about_mobile.py)",
       "Bash(python hover_check.py)",
       "Bash(python carousel_loop.py)",
-      "Bash(python loop_check.py)"
+      "Bash(python loop_check.py)",
+      "Bash(python favicon_check.py)"
     ],
     "additionalDirectories": [
       "\\tmp"
