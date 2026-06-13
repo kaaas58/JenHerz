@@ -55,11 +55,9 @@
   var prevBtn = document.getElementById("carouselPrev");
   var nextBtn = document.getElementById("carouselNext");
 
-  /* Endlosschleife auf Mobile: vorne/hinten je eine Klon-Karte anhängen,
-     damit beim Überlauf unbemerkt zur echten Karte zurückgesprungen werden kann */
-  var loopMq = window.matchMedia("(max-width: 700px)");
-  var startClone = null;
-  var endClone = null;
+  /* Endlosschleife: vor und nach den echten Karten je eine vollständige
+     Kopie anhängen, damit beim Überlauf unbemerkt zurückgesprungen werden kann */
+  var numRealCards = 0;
 
   function getStep() {
     var card = track.querySelector(".testimonial-card");
@@ -69,38 +67,30 @@
   }
 
   function setupLoopClones() {
-    if (!track || startClone) return;
-    var cards = track.querySelectorAll(".testimonial-card");
-    if (cards.length < 2) return;
+    if (!track || numRealCards) return;
+    var realCards = Array.prototype.slice.call(track.querySelectorAll(".testimonial-card"));
+    if (realCards.length < 2) return;
+    numRealCards = realCards.length;
 
-    endClone = cards[0].cloneNode(true);
-    startClone = cards[cards.length - 1].cloneNode(true);
-    [startClone, endClone].forEach(function (clone) {
+    var preFrag = document.createDocumentFragment();
+    realCards.forEach(function (card) {
+      var clone = card.cloneNode(true);
       clone.removeAttribute("id");
       clone.setAttribute("aria-hidden", "true");
       clone.setAttribute("tabindex", "-1");
+      preFrag.appendChild(clone);
+    });
+    track.insertBefore(preFrag, track.firstChild);
+
+    realCards.forEach(function (card) {
+      var clone = card.cloneNode(true);
+      clone.removeAttribute("id");
+      clone.setAttribute("aria-hidden", "true");
+      clone.setAttribute("tabindex", "-1");
+      track.appendChild(clone);
     });
 
-    track.insertBefore(startClone, track.firstChild);
-    track.appendChild(endClone);
-    track.scrollLeft = getStep();
-  }
-
-  function teardownLoopClones() {
-    if (!startClone) return;
-    startClone.parentNode.removeChild(startClone);
-    endClone.parentNode.removeChild(endClone);
-    startClone = null;
-    endClone = null;
-    track.scrollLeft = 0;
-  }
-
-  function syncLoopClones() {
-    if (loopMq.matches) {
-      setupLoopClones();
-    } else {
-      teardownLoopClones();
-    }
+    track.scrollLeft = numRealCards * getStep();
   }
 
   function scrollByCard(direction) {
@@ -109,25 +99,27 @@
     track.scrollBy({ left: direction * step, behavior: "smooth" });
     collapseFeatureCards();
 
-    if (startClone) {
+    if (numRealCards) {
       setTimeout(function () {
-        var maxScroll = track.scrollWidth - track.clientWidth;
-        if (direction > 0 && track.scrollLeft >= maxScroll - 1) {
-          track.scrollLeft = step;
+        var span = numRealCards * step;
+        if (direction > 0 && track.scrollLeft >= span * 2 - 1) {
+          track.scrollLeft -= span;
         } else if (direction < 0 && track.scrollLeft <= 1) {
-          track.scrollLeft = maxScroll - step;
+          track.scrollLeft += span;
         }
       }, 500);
     }
   }
 
   if (track) {
-    syncLoopClones();
-    if (loopMq.addEventListener) {
-      loopMq.addEventListener("change", syncLoopClones);
-    } else {
-      loopMq.addListener(syncLoopClones);
-    }
+    setupLoopClones();
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (numRealCards) track.scrollLeft = numRealCards * getStep();
+      }, 200);
+    });
   }
 
   if (prevBtn) prevBtn.addEventListener("click", function () { scrollByCard(-1); });
