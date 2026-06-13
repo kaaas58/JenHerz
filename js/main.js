@@ -55,13 +55,79 @@
   var prevBtn = document.getElementById("carouselPrev");
   var nextBtn = document.getElementById("carouselNext");
 
-  function scrollByCard(direction) {
-    if (!track) return;
+  /* Endlosschleife auf Mobile: vorne/hinten je eine Klon-Karte anhängen,
+     damit beim Überlauf unbemerkt zur echten Karte zurückgesprungen werden kann */
+  var loopMq = window.matchMedia("(max-width: 700px)");
+  var startClone = null;
+  var endClone = null;
+
+  function getStep() {
     var card = track.querySelector(".testimonial-card");
     var cardWidth = card ? card.getBoundingClientRect().width : 340;
-    var gap = 24;
-    track.scrollBy({ left: direction * (cardWidth + gap), behavior: "smooth" });
+    var gap = parseFloat(getComputedStyle(track).columnGap) || 16;
+    return cardWidth + gap;
+  }
+
+  function setupLoopClones() {
+    if (!track || startClone) return;
+    var cards = track.querySelectorAll(".testimonial-card");
+    if (cards.length < 2) return;
+
+    endClone = cards[0].cloneNode(true);
+    startClone = cards[cards.length - 1].cloneNode(true);
+    [startClone, endClone].forEach(function (clone) {
+      clone.removeAttribute("id");
+      clone.setAttribute("aria-hidden", "true");
+      clone.setAttribute("tabindex", "-1");
+    });
+
+    track.insertBefore(startClone, track.firstChild);
+    track.appendChild(endClone);
+    track.scrollLeft = getStep();
+  }
+
+  function teardownLoopClones() {
+    if (!startClone) return;
+    startClone.parentNode.removeChild(startClone);
+    endClone.parentNode.removeChild(endClone);
+    startClone = null;
+    endClone = null;
+    track.scrollLeft = 0;
+  }
+
+  function syncLoopClones() {
+    if (loopMq.matches) {
+      setupLoopClones();
+    } else {
+      teardownLoopClones();
+    }
+  }
+
+  function scrollByCard(direction) {
+    if (!track) return;
+    var step = getStep();
+    track.scrollBy({ left: direction * step, behavior: "smooth" });
     collapseFeatureCards();
+
+    if (startClone) {
+      setTimeout(function () {
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        if (direction > 0 && track.scrollLeft >= maxScroll - 1) {
+          track.scrollLeft = step;
+        } else if (direction < 0 && track.scrollLeft <= 1) {
+          track.scrollLeft = maxScroll - step;
+        }
+      }, 500);
+    }
+  }
+
+  if (track) {
+    syncLoopClones();
+    if (loopMq.addEventListener) {
+      loopMq.addEventListener("change", syncLoopClones);
+    } else {
+      loopMq.addListener(syncLoopClones);
+    }
   }
 
   if (prevBtn) prevBtn.addEventListener("click", function () { scrollByCard(-1); });

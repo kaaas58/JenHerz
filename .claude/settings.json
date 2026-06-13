@@ -9,7 +9,9 @@
       "Bash(python -c \"from PIL import Image; print\\(Image.open\\('jen.jpg'\\).size\\); print\\(Image.open\\('jen2.jpg'\\).size\\)\")",
       "Bash(python flip_check.py)",
       "Bash(python about_mobile.py)",
-      "Bash(python hover_check.py)"
+      "Bash(python hover_check.py)",
+      "Bash(python carousel_loop.py)",
+      "Bash(python loop_check.py)"
     ],
     "additionalDirectories": [
       "\\tmp"

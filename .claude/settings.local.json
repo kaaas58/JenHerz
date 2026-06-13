@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir -p \"c:\\\\Users\\\\lutr5\\\\58_Structure\\\\DEV\\\\DEV_websides\\\\JennHerzraum\\\\css\" \"c:\\\\Users\\\\lutr5\\\\58_Structure\\\\DEV\\\\DEV_websides\\\\JennHerzraum\\\\js\")"
+      "Bash(mkdir -p \"c:\\\\Users\\\\lutr5\\\\58_Structure\\\\DEV\\\\DEV_websides\\\\JennHerzraum\\\\css\" \"c:\\\\Users\\\\lutr5\\\\58_Structure\\\\DEV\\\\DEV_websides\\\\JennHerzraum\\\\js\")",
+      "Bash(python new_testimonial.py)"
     ],
     "additionalDirectories": [
       "c:\\Users\\lutr5\\58_Structure\\DEV\\DEV_websides\\JennHerzraum"
