@@ -343,20 +343,26 @@ p { max-width: 62ch; }
   font-family: var(--font-heading);
   font-style: italic;
   font-weight: 600;
-  font-size: 1.75rem;
+  font-size: 2rem;
   color: var(--color-text);
 }
 .hero__closing {
   font-family: var(--font-heading);
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-style: italic;
   font-weight: 600;
   color: var(--color-gold-deep);
   margin-top: 1.4em;
 }
+.hero__sub {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 600;
+}
 .hero__journey {
   font-family: var(--font-heading);
   font-style: italic;
+  font-weight: 600;
   font-size: 1.18rem;
   color: var(--color-text);
   margin-top: 1.4em;
@@ -590,6 +596,52 @@ p { max-width: 62ch; }
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
 }
+.about__media--flip {
+  width: 100%;
+  perspective: 1800px;
+  cursor: pointer;
+}
+.about__media--flip:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 6px;
+  border-radius: var(--radius-lg);
+}
+.about__media-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+  transition: transform 0.9s var(--ease-soft);
+}
+.about__media--flip.is-flipped .about__media-inner {
+  transform: rotateY(180deg);
+}
+.about__media-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.about__media-face--back {
+  transform: rotateY(180deg);
+}
+.about__media-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-medium);
+}
+.about__media--flip:hover img {
+  transform: scale(1.04);
+}
+.about__media-face--back img {
+  filter: sepia(0.35) saturate(1.15) brightness(1.04) hue-rotate(-6deg);
+}
 .about__lede {
   font-family: var(--font-heading);
   font-style: italic;
@@ -692,14 +744,6 @@ p { max-width: 62ch; }
 .approach-list p {
   color: var(--color-text-soft);
   font-size: 0.99rem;
-}
-.approach-item__closing {
-  margin-top: 18px;
-  font-family: var(--font-heading);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--color-gold-deep);
-  line-height: 1.7;
 }
 .approach-closing {
   text-align: center;
@@ -810,6 +854,21 @@ p { max-width: 62ch; }
   color: var(--color-tile-text);
   transform: rotateY(180deg);
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+.testimonial-card__face--back::-webkit-scrollbar {
+  width: 6px;
+}
+.testimonial-card__face--back::-webkit-scrollbar-track {
+  background: transparent;
+}
+.testimonial-card__face--back::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 3px;
+}
+.testimonial-card__face--back::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.55);
 }
 .testimonial-card__mark {
   font-family: var(--font-heading);
@@ -1023,12 +1082,35 @@ p { max-width: 62ch; }
   #kontakt  { scroll-margin-top: -10px; }
 
   /* ---- Karussell ---- */
-  /* Buttons ausblenden – auf Mobile wird gewischt */
-  .carousel__btn { display: none; }
+  /* Pfeile als kleine Kreise, die zur Hälfte auf dem Kachelrand sitzen */
+  .carousel {
+    position: relative;
+  }
+  .carousel__btn {
+    position: absolute;
+    /* Feste Position relativ zur unaufgeklappten Kartenhöhe, damit die Pfeile
+       beim Umdrehen einer Karte (größere min-height) nicht nach unten wandern */
+    top: 140px;
+    z-index: 2;
+    width: 38px;
+    height: 38px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 12px rgba(74, 59, 46, 0.18);
+  }
+  .carousel__btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  .carousel__btn--prev { left: 0; }
+  .carousel__btn--next { left: 100%; }
+  .carousel__btn:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
 
   /* Track füllt den vollen Container */
   .carousel__track {
     flex: 1 1 auto;
+    width: 100%;
     padding: 10px 0 24px;
     gap: 16px;
   }

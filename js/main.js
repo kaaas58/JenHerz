@@ -61,6 +61,7 @@
     var cardWidth = card ? card.getBoundingClientRect().width : 340;
     var gap = 24;
     track.scrollBy({ left: direction * (cardWidth + gap), behavior: "smooth" });
+    collapseFeatureCards();
   }
 
   if (prevBtn) prevBtn.addEventListener("click", function () { scrollByCard(-1); });
@@ -101,21 +102,56 @@
     });
   });
 
-  /* ---------- Feature testimonial: flip / expand on click ---------- */
-  var featureCard = document.getElementById("featureTestimonial");
+  /* ---------- Über mich: Bild umdrehen ---------- */
+  var aboutMedia = document.querySelector(".about__media--flip");
 
-  function toggleFlip() {
-    var isFlipped = featureCard.classList.toggle("is-flipped");
-    featureCard.setAttribute("aria-pressed", String(isFlipped));
-  }
+  if (aboutMedia) {
+    var toggleAboutMedia = function () {
+      var isFlipped = !aboutMedia.classList.contains("is-flipped");
+      aboutMedia.classList.toggle("is-flipped", isFlipped);
+      aboutMedia.setAttribute("aria-pressed", String(isFlipped));
+    };
 
-  if (featureCard) {
-    featureCard.addEventListener("click", toggleFlip);
-    featureCard.addEventListener("keydown", function (event) {
+    aboutMedia.addEventListener("click", toggleAboutMedia);
+    aboutMedia.addEventListener("keydown", function (event) {
       if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
         event.preventDefault();
-        toggleFlip();
+        toggleAboutMedia();
       }
     });
   }
+
+  /* ---------- Feature testimonials: flip / expand on click ---------- */
+  var featureCards = document.querySelectorAll(".testimonial-card--feature");
+
+  function setFlipped(card, flipped) {
+    card.classList.toggle("is-flipped", flipped);
+    card.setAttribute("aria-pressed", String(flipped));
+  }
+
+  function collapseFeatureCards(except) {
+    featureCards.forEach(function (card) {
+      if (card !== except && card.classList.contains("is-flipped")) {
+        setFlipped(card, false);
+      }
+    });
+  }
+
+  function toggleFlip(card) {
+    var isFlipped = !card.classList.contains("is-flipped");
+    collapseFeatureCards(card);
+    setFlipped(card, isFlipped);
+  }
+
+  featureCards.forEach(function (card) {
+    card.addEventListener("click", function () {
+      toggleFlip(card);
+    });
+    card.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+        event.preventDefault();
+        toggleFlip(card);
+      }
+    });
+  });
 })();

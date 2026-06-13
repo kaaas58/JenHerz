@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(rm -f /tmp/shot.py /tmp/shot2.py /tmp/offer_mobile.png /tmp/tile_brown.png)"
+      "Bash(rm -f /tmp/shot.py /tmp/shot2.py /tmp/offer_mobile.png /tmp/tile_brown.png)",
+      "Bash(rm -f /tmp/shot3.py /tmp/testimonials.png /tmp/testimonial2_flipped.png)",
+      "Bash(rm -f /tmp/shot4.py /tmp/testimonials.png)",
+      "Bash(python -c ' *)",
+      "Bash(python scrollbar_check.py)",
+      "Bash(python -c \"from PIL import Image; print\\(Image.open\\('jen.jpg'\\).size\\); print\\(Image.open\\('jen2.jpg'\\).size\\)\")",
+      "Bash(python flip_check.py)",
+      "Bash(python about_mobile.py)",
+      "Bash(python hover_check.py)"
     ],
     "additionalDirectories": [
       "\\tmp"
